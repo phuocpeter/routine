@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class NewUserViewController: UIViewController, UITextFieldDelegate {
+class NewUserViewController: UITableViewController, UITextFieldDelegate {
   
   let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
   var managedObjectContext: NSManagedObjectContext?
@@ -17,10 +17,13 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var dobSelector: UIDatePicker!
   
+  // MARK: - View Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     managedObjectContext = appDelegate.managedObjectContext
+    // Setup UI
     let today = NSDate()
     dobSelector.maximumDate = today
     nameTextField.delegate = self
@@ -28,22 +31,45 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
   
-  // Hide keyboard
+  // MARK: - UI Text Field Delegate Methods
+  
+  /** Hides keyboard on RETURN. */
   func textFieldShouldReturn(textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }
   
+  // MARK: - UI Table View Controller Methods
+  
+  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    return nil
+  }
+  
+  /**
+   * Checks if information is valid then saves and dimisses the
+   * view.
+   */
   @IBAction func doneClicked(sender: AnyObject) {
     if let name = nameTextField.text {
       if name == "" { return }
       setupUser()
+      self.dismissViewControllerAnimated(true, completion: nil)
     }
   }
   
+  /**
+   * Dimisses view without saving.
+   */
+  @IBAction func cancelled(sender: AnyObject) {
+    self.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  /**
+   * Adds user's profile into database. User's profile includes
+   * name and date of birth.
+   */
   func setupUser() {
     let userDescription = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext!)
     let profile = NSManagedObject(entity: userDescription!, insertIntoManagedObjectContext: managedObjectContext!)

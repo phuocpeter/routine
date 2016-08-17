@@ -15,7 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    // Override point for customization after application launch.
+    
+    // Passes managedObjectContext to next View Controller
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let navigation = storyboard.instantiateViewControllerWithIdentifier("rootNavigationController") as! UINavigationController
+    let controller = navigation.topViewController as! LoginViewController
+    controller.managedObjectContext = self.managedObjectContext
+    
+    window?.rootViewController = navigation
+    
     return true
   }
 
