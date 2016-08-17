@@ -68,13 +68,19 @@ class NewUserViewController: UITableViewController, UITextFieldDelegate {
   
   /**
    * Adds user's profile into database. User's profile includes
-   * name and date of birth.
+   * name, date of birth and empty stats.
    */
   func setupUser() {
-    let userDescription = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext!)
-    let profile = NSManagedObject(entity: userDescription!, insertIntoManagedObjectContext: managedObjectContext!)
+    let userEntity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext!)
+    let profile = NSManagedObject(entity: userEntity!, insertIntoManagedObjectContext: managedObjectContext!)
     profile.setValue(nameTextField.text, forKey: "name")
     profile.setValue(dobSelector.date, forKey: "dob")
+    
+    // Adds empty stats to profile
+    let statsEntity = NSEntityDescription.entityForName("Stats", inManagedObjectContext: managedObjectContext!)
+    let stats = NSManagedObject(entity: statsEntity!, insertIntoManagedObjectContext: managedObjectContext!)
+    
+    profile.setValue(stats, forKey: "stats")
     
     do {
       try profile.managedObjectContext?.save()

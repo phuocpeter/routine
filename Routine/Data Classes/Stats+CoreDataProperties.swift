@@ -18,6 +18,6 @@ extension Stats {
     @NSManaged var intelligence: NSNumber?
     @NSManaged var speed: NSNumber?
     @NSManaged var strength: NSNumber?
-    @NSManaged var user: NSManagedObject?
+    @NSManaged var user: User?
 
 }

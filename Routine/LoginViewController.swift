@@ -128,6 +128,21 @@ class LoginViewController: UITableViewController, NSFetchedResultsControllerDele
       break;
     }
   }
+  
+  // MARK: - Prepare Segue
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if (segue.identifier == "logIn") {
+      let tabBarController = segue.destinationViewController as! UITabBarController
+      let navigationController = tabBarController.viewControllers![0] as! UINavigationController
+      let controller = navigationController.topViewController as! AccountViewController
+      if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+        let record = fetchedResultsController.objectAtIndexPath(indexPath) as! User
+        controller.user = record
+        controller.managedObjectContext = self.managedObjectContext
+      }
+    }
+  }
 
   // MARK: - Helper Methods
   
