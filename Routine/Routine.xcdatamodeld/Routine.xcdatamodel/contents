@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
+    <entity name="Challenge" representedClassName=".Challenge" syncable="YES">
+        <attribute name="category" attributeType="String" syncable="YES"/>
+        <attribute name="desc" attributeType="String" syncable="YES"/>
+        <attribute name="exp" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" attributeType="Double" defaultValueString="1" syncable="YES"/>
+        <attribute name="schedule" attributeType="String" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="challenge" inverseEntity="User" syncable="YES"/>
+    </entity>
     <entity name="Stats" representedClassName=".Stats" syncable="YES">
         <attribute name="appearance" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="intelligence" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -10,10 +19,12 @@
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="dob" attributeType="Date" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="challenge" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Challenge" inverseName="user" inverseEntity="Challenge" syncable="YES"/>
         <relationship name="stats" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stats" inverseName="user" inverseEntity="Stats" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Stats" positionX="-54" positionY="9" width="128" height="120"/>
-        <element name="User" positionX="-263" positionY="-63" width="128" height="90"/>
+        <element name="Stats" positionX="-191" positionY="-18" width="128" height="120"/>
+        <element name="User" positionX="-407" positionY="-72" width="128" height="105"/>
+        <element name="Challenge" positionX="-191" positionY="-207" width="128" height="148"/>
     </elements>
 </model>

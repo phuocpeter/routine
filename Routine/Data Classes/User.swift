@@ -12,6 +12,24 @@ import CoreData
 
 class User: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+  /**
+   * Converts NSDate to a medium date string.
+   * - Returns: Medium style date string.
+   */
+  func getDOBString() -> String {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateStyle = .MediumStyle
+    return dateFormatter.stringFromDate(self.dob)
+  }
+  
+  /**
+   * Finds the approximate age of the user.
+   * - Returns: The age in years.
+   */
+  func getAge() -> Double {
+    let ageInSeconds = self.dob.timeIntervalSinceNow
+    let ageInYears = ageInSeconds / 31104000 * (-1)
+    return ageInYears
+  }
+  
 }

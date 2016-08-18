@@ -1,5 +1,5 @@
 //
-//  User+CoreDataProperties.swift
+//  Challenge+CoreDataProperties.swift
 //  Routine
 //
 //  Created by Tran Thai Phuoc on 2016-08-17.
@@ -12,11 +12,14 @@
 import Foundation
 import CoreData
 
-extension User {
+extension Challenge {
 
-    @NSManaged var dob: NSDate!
-    @NSManaged var name: String!
-    @NSManaged var stats: Stats?
-    @NSManaged var challenge: Challenge?
+    @NSManaged var name: String?
+    @NSManaged var desc: String?
+    @NSManaged var quantity: NSNumber?
+    @NSManaged var category: String?
+    @NSManaged var exp: NSNumber?
+    @NSManaged var schedule: String?
+    @NSManaged var user: User?
 
 }

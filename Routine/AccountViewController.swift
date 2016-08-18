@@ -16,6 +16,7 @@ class AccountViewController: UITableViewController {
   var stats: Stats!
   
   @IBOutlet weak var dobCell: UITableViewCell!
+  @IBOutlet weak var ageCell: UITableViewCell!
   
   // MARK: - View Life Cycle
   
@@ -28,13 +29,25 @@ class AccountViewController: UITableViewController {
   }
   
   func setupCells() {
-    dobCell.detailTextLabel?.text = user.dob!.description
+    dobCell.detailTextLabel?.text = user.getDOBString();
+    // Display formatted age
+    let age = user.getAge()
+    ageCell.detailTextLabel?.text = String(format: "%.2f years", age)
   }
   
   // MARK: - UI Table View Controller Methods
   
   override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
     return nil
+  }
+  
+  // MARK: - Prepare Segue
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "challengeView" {
+      let controller = segue.destinationViewController as! ChallengesViewController
+      controller.managedObjectContext = self.managedObjectContext
+    }
   }
   
 }
