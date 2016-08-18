@@ -17,6 +17,6 @@ extension User {
     @NSManaged var dob: NSDate!
     @NSManaged var name: String!
     @NSManaged var stats: Stats?
-    @NSManaged var challenge: Challenge?
+    @NSManaged var challenge: NSSet?
 
 }
