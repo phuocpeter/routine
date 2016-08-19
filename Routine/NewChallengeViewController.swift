@@ -9,11 +9,12 @@
 import UIKit
 import CoreData
 
-class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ScheduleViewControllerDelegate {
   
   let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
   var managedObjectContext: NSManagedObjectContext?
   var user: User!
+  var scheduleSelection: [Bool]?
   /** 
    * This variable tracks the number of quantity selected
    * by the stepper
@@ -21,13 +22,11 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
   var quantity = 1
   let categories: [String] = ["Appearance", "Intelligence", "Speed", "Strength"]
   let categoryPicker = UIPickerView()
-  let schedulePicker = UIPickerView()
   
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var descTextField: UITextView!
   @IBOutlet weak var quantityLabel: UILabel!
   @IBOutlet weak var categoryField: UITextField!
-  @IBOutlet weak var scheduleField: UITextField!
   
   // MARK: - View Life Cycle
   
@@ -46,6 +45,7 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
   // MARK: - UI Table View Methods
   
   override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    if indexPath.row == 4 { return indexPath }
     return nil
   }
   
@@ -63,35 +63,17 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
   }
   
   func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    switch pickerView {
-    case categoryPicker:
-      return categories.count
-    case schedulePicker:
-      return 1
-    default:
-      return 0
-    }
+    return categories.count
   }
   
   // MARK: - UI Picker View Delegate Methods
   
   func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    switch pickerView {
-    case categoryPicker:
-      return categories[row]
-    default:
-      return ""
-    }
+    return categories[row]
   }
   
   func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    switch pickerView {
-    case categoryPicker:
-      categoryField.text = categories[row]
-      break
-    default:
-      break
-    }
+    categoryField.text = categories[row]
   }
   
   @IBAction func cancelled(sender: AnyObject) {
@@ -99,9 +81,16 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
   }
   
   @IBAction func saveClicked(sender: AnyObject) {
-    if (nameTextField.text == "" || categoryField.text == "" || scheduleField.text == "") {
-      return
+    if (nameTextField.text == "" || categoryField.text == "") { return }
+    if scheduleSelection == nil { return }
+    var selected = false
+    for sel in scheduleSelection! {
+      if sel {
+        selected = true
+        break
+      }
     }
+    if !selected { return }
     if saveNewChallenge() {
       self.dismissViewControllerAnimated(true, completion: nil)
     } else {
@@ -112,6 +101,24 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
   @IBAction func quantityChanged(sender: UIStepper) {
     quantity = Int(sender.value)
     quantityLabel.text = "\(quantity)"
+  }
+  
+  // MARK: - Prepare for Segue
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "scheduleView" {
+      let controller = segue.destinationViewController as! ScheduleViewController
+      controller.delegate = self
+      if let sel = scheduleSelection {
+        controller.selection = sel
+      }
+    }
+  }
+  
+  // MARK: - Schedule View Controller Delegate Methods
+  
+  func scheduleViewDidFinish(controller: ScheduleViewController) {
+    self.scheduleSelection = controller.selection
   }
   
   // MARK: - Helper Methods
@@ -126,9 +133,6 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
     categoryField.delegate = self
     categoryPicker.delegate = self
     categoryField.inputView = categoryPicker
-    scheduleField.delegate = self
-    schedulePicker.delegate = self
-    scheduleField.inputView = schedulePicker
   }
   
   /**
@@ -146,6 +150,13 @@ class NewChallengeViewController: UITableViewController, UITextFieldDelegate, UI
     challenge.setValue(0, forKey: "times")
     challenge.setValue(1, forKey: "exp")
     challenge.setValue(user, forKey: "user")
+    challenge.setValue(scheduleSelection![0], forKey: "monday")
+    challenge.setValue(scheduleSelection![1], forKey: "tuesday")
+    challenge.setValue(scheduleSelection![2], forKey: "wednesday")
+    challenge.setValue(scheduleSelection![3], forKey: "thursday")
+    challenge.setValue(scheduleSelection![4], forKey: "friday")
+    challenge.setValue(scheduleSelection![5], forKey: "saturday")
+    challenge.setValue(scheduleSelection![6], forKey: "sunday")
     
     do {
       try challenge.managedObjectContext?.save()
