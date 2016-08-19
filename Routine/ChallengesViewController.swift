@@ -11,6 +11,7 @@ import CoreData
 
 class ChallengesViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
+  var user: User!
   var managedObjectContext: NSManagedObjectContext!
   
   lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -104,5 +105,14 @@ class ChallengesViewController: UITableViewController, NSFetchedResultsControlle
     }
   }
 
+  // MARK: - Prepare for Segue
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "addChallenge" {
+      let navigation = segue.destinationViewController as! UINavigationController
+      let controller = navigation.topViewController as! NewChallengeViewController
+      controller.user = self.user
+    }
+  }
   
 }

@@ -46,6 +46,7 @@ class AccountViewController: UITableViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "challengeView" {
       let controller = segue.destinationViewController as! ChallengesViewController
+      controller.user = self.user
       controller.managedObjectContext = self.managedObjectContext
     }
   }

@@ -7,6 +7,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="quantity" attributeType="Double" defaultValueString="1" syncable="YES"/>
         <attribute name="schedule" attributeType="String" syncable="YES"/>
+        <attribute name="times" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="challenge" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Stats" representedClassName=".Stats" syncable="YES">
@@ -23,8 +24,8 @@
         <relationship name="stats" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stats" inverseName="user" inverseEntity="Stats" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Challenge" positionX="-191" positionY="-207" width="128" height="165"/>
         <element name="Stats" positionX="-191" positionY="-18" width="128" height="120"/>
         <element name="User" positionX="-407" positionY="-72" width="128" height="105"/>
-        <element name="Challenge" positionX="-191" positionY="-207" width="128" height="148"/>
     </elements>
 </model>
