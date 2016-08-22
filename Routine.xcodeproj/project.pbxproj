@@ -13,6 +13,7 @@
 		981674341D63A7660076F505 /* Routine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 981674321D63A7660076F505 /* Routine.xcdatamodeld */; };
 		981674361D63A7660076F505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 981674351D63A7660076F505 /* Assets.xcassets */; };
 		981674391D63A7660076F505 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981674371D63A7660076F505 /* LaunchScreen.storyboard */; };
+		98826E7D1D6A648600C66174 /* ChallengeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98826E7C1D6A648600C66174 /* ChallengeDetailViewController.swift */; };
 		98A5FB381D67539A000E7F6F /* NewChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5FB371D67539A000E7F6F /* NewChallengeViewController.swift */; };
 		98A5FB3E1D6771C8000E7F6F /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5FB3D1D6771C8000E7F6F /* ScheduleViewController.swift */; };
 		98DDFA911D64BDF500437DC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DDFA901D64BDF500437DC9 /* LoginViewController.swift */; };
@@ -36,6 +37,7 @@
 		981674351D63A7660076F505 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		981674381D63A7660076F505 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9816743A1D63A7660076F505 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98826E7C1D6A648600C66174 /* ChallengeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeDetailViewController.swift; sourceTree = "<group>"; };
 		98A5FB371D67539A000E7F6F /* NewChallengeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChallengeViewController.swift; sourceTree = "<group>"; };
 		98A5FB3D1D6771C8000E7F6F /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		98DDFA901D64BDF500437DC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				9816742D1D63A7660076F505 /* NewUserViewController.swift */,
 				98DDFA9B1D64E77600437DC9 /* AccountViewController.swift */,
 				98DDFAAE1D65359200437DC9 /* ChallengesViewController.swift */,
+				98826E7C1D6A648600C66174 /* ChallengeDetailViewController.swift */,
 				98A5FB371D67539A000E7F6F /* NewChallengeViewController.swift */,
 				98A5FB3D1D6771C8000E7F6F /* ScheduleViewController.swift */,
 				9816742F1D63A7660076F505 /* Main.storyboard */,
@@ -202,6 +205,7 @@
 				981674341D63A7660076F505 /* Routine.xcdatamodeld in Sources */,
 				9816742E1D63A7660076F505 /* NewUserViewController.swift in Sources */,
 				98DDFAAF1D65359200437DC9 /* ChallengesViewController.swift in Sources */,
+				98826E7D1D6A648600C66174 /* ChallengeDetailViewController.swift in Sources */,
 				9816742C1D63A7660076F505 /* AppDelegate.swift in Sources */,
 				98DDFAA91D6531FF00437DC9 /* Challenge+CoreDataProperties.swift in Sources */,
 				98DDFA9C1D64E77600437DC9 /* AccountViewController.swift in Sources */,

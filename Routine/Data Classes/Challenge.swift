@@ -12,6 +12,21 @@ import CoreData
 
 class Challenge: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
+  /**
+   * Iterates through the object's schedule and appends the days
+   * in the schedule.
+   * - Returns: an array of days in the schedule.
+   */
+  func getScheduleArray() -> [Bool] {
+    var scheduleArray: [Bool] = []
+    scheduleArray += [monday.boolValue]
+    scheduleArray += [tuesday.boolValue]
+    scheduleArray += [wednesday.boolValue]
+    scheduleArray += [thursday.boolValue]
+    scheduleArray += [friday.boolValue]
+    scheduleArray += [saturday.boolValue]
+    scheduleArray += [sunday.boolValue]
+    return scheduleArray
+  }
 
 }

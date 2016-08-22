@@ -59,6 +59,26 @@ class ChallengesViewController: UITableViewController, NSFetchedResultsControlle
     cell.exp.text = "\(challenge.exp!.doubleValue) EXP"
   }
   
+  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    return true
+  }
+  
+  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    switch editingStyle {
+    case .Delete:
+      let record = fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject
+      managedObjectContext.deleteObject(record)
+      saveCoreData()
+      break
+    default:
+      break
+    }
+  }
+  
+  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    return nil
+  }
+  
   // MARK: - Fetched Results Controller Delegate Methods
   
   func controllerWillChangeContent(controller: NSFetchedResultsController) {
@@ -112,6 +132,22 @@ class ChallengesViewController: UITableViewController, NSFetchedResultsControlle
       let navigation = segue.destinationViewController as! UINavigationController
       let controller = navigation.topViewController as! NewChallengeViewController
       controller.user = self.user
+    }
+    if segue.identifier == "challengeDetailView" {
+      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)
+      let challengeChosen = fetchedResultsController.objectAtIndexPath(indexPath!) as! Challenge
+      let controller = segue.destinationViewController as! ChallengeDetailViewController
+      controller.challenge = challengeChosen
+    }
+  }
+  
+  // MARK: - Helper Methods
+  
+  func saveCoreData() {
+    do {
+      try managedObjectContext.save()
+    } catch {
+      print(error)
     }
   }
   

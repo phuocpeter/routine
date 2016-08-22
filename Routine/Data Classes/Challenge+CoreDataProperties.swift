@@ -20,13 +20,13 @@ extension Challenge {
     @NSManaged var name: String?
     @NSManaged var quantity: NSNumber?
     @NSManaged var times: NSNumber?
-    @NSManaged var monday: NSNumber?
-    @NSManaged var tuesday: NSNumber?
-    @NSManaged var wednesday: NSNumber?
-    @NSManaged var thursday: NSNumber?
-    @NSManaged var friday: NSNumber?
-    @NSManaged var saturday: NSNumber?
-    @NSManaged var sunday: NSNumber?
+    @NSManaged var monday: NSNumber!
+    @NSManaged var tuesday: NSNumber!
+    @NSManaged var wednesday: NSNumber!
+    @NSManaged var thursday: NSNumber!
+    @NSManaged var friday: NSNumber!
+    @NSManaged var saturday: NSNumber!
+    @NSManaged var sunday: NSNumber!
     @NSManaged var user: User?
 
 }
