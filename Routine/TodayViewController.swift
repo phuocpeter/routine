@@ -1,23 +1,30 @@
 //
-//  ChallengesViewController.swift
+//  TodayViewController.swift
 //  Routine
 //
-//  Created by Tran Thai Phuoc on 2016-08-17.
+//  Created by Tran Thai Phuoc on 2016-08-23.
 //  Copyright © 2016 Tran Thai Phuoc. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class ChallengesViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-
-  var user: User!
+class TodayViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+  
+  let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
   var managedObjectContext: NSManagedObjectContext!
+  var weekday: Int!
+  
+  // Fetched Results Controller Initialisation
   
   lazy var fetchedResultsController: NSFetchedResultsController = {
     let fetchRequest = NSFetchRequest(entityName: "Challenge")
     let sortDesc = NSSortDescriptor(key: "name", ascending: true)
     fetchRequest.sortDescriptors = [sortDesc]
+    
+    if let predicate = Challenge.getPredicate(self.weekday) {
+      fetchRequest.predicate = predicate
+    }
     
     let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
     fetchedResultsController.delegate = self
@@ -29,11 +36,18 @@ class ChallengesViewController: UITableViewController, NSFetchedResultsControlle
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    setupDate() 
+    managedObjectContext = appDel.managedObjectContext
     do {
       try fetchedResultsController.performFetch()
     } catch {
       print(error)
     }
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
   }
   
   // MARK: - UI Table View Methods
@@ -53,31 +67,10 @@ class ChallengesViewController: UITableViewController, NSFetchedResultsControlle
   }
   
   func configureCell(cell: ChallengeCell, withIndexPath indexPath: NSIndexPath) {
-    // Fetchs challenge
     let challenge = fetchedResultsController.objectAtIndexPath(indexPath) as! Challenge
     cell.name.text = challenge.name!
     cell.exp.text = "\(challenge.exp!) EXP"
     cell.icon.image = challenge.getIconImage()
-  }
-  
-  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return true
-  }
-  
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    switch editingStyle {
-    case .Delete:
-      let record = fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject
-      managedObjectContext.deleteObject(record)
-      saveCoreData()
-      break
-    default:
-      break
-    }
-  }
-  
-  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    return nil
   }
   
   // MARK: - Fetched Results Controller Delegate Methods
@@ -125,31 +118,15 @@ class ChallengesViewController: UITableViewController, NSFetchedResultsControlle
       break;
     }
   }
-
-  // MARK: - Prepare for Segue
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "addChallenge" {
-      let navigation = segue.destinationViewController as! UINavigationController
-      let controller = navigation.topViewController as! NewChallengeViewController
-      controller.user = self.user
-    }
-    if segue.identifier == "challengeDetailView" {
-      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)
-      let challengeChosen = fetchedResultsController.objectAtIndexPath(indexPath!) as! Challenge
-      let controller = segue.destinationViewController as! ChallengeDetailViewController
-      controller.challenge = challengeChosen
-    }
-  }
   
   // MARK: - Helper Methods
   
-  func saveCoreData() {
-    do {
-      try managedObjectContext.save()
-    } catch {
-      print(error)
-    }
+  /** Finds today's date and initialises the weekday variable. */
+  func setupDate() {
+    let today = NSDate()
+    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+    let calComponent = calendar?.component(.Weekday, fromDate: today)
+    weekday = calComponent
   }
   
 }

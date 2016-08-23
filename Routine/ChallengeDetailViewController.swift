@@ -46,6 +46,7 @@ class ChallengeDetailViewController: UITableViewController {
     categoryLabel.text = challenge.category
     timesLabel.text = "\(challenge.times!)"
     expLabel.text = "\(challenge.exp!)"
+    icon.image = challenge.getIconImage()
     if challenge.desc == "" {
       descField.text = "No Description"
     } else {
